@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D358D4B72124D50200EDA627 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D358D4B62124D50200EDA627 /* SecondViewController.swift */; };
 		D3BAB7AB212473BC00370D9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BAB7AA212473BC00370D9E /* AppDelegate.swift */; };
 		D3BAB7AD212473BC00370D9E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BAB7AC212473BC00370D9E /* ViewController.swift */; };
 		D3BAB7B0212473BC00370D9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3BAB7AE212473BC00370D9E /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D358D4B62124D50200EDA627 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		D3BAB7A7212473BC00370D9E /* ex2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ex2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BAB7AA212473BC00370D9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3BAB7AC212473BC00370D9E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				D3BAB7AA212473BC00370D9E /* AppDelegate.swift */,
 				D3BAB7AC212473BC00370D9E /* ViewController.swift */,
 				D3BAB7AE212473BC00370D9E /* Main.storyboard */,
+				D358D4B62124D50200EDA627 /* SecondViewController.swift */,
 				D3BAB7B4212473BE00370D9E /* Assets.xcassets */,
 				D3BAB7B6212473BE00370D9E /* LaunchScreen.storyboard */,
 				D3BAB7B9212473BE00370D9E /* Info.plist */,
@@ -259,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D358D4B72124D50200EDA627 /* SecondViewController.swift in Sources */,
 				D3BAB7AD212473BC00370D9E /* ViewController.swift in Sources */,
 				D3BAB7AB212473BC00370D9E /* AppDelegate.swift in Sources */,
 				D3BAB7B3212473BC00370D9E /* ex2.xcdatamodeld in Sources */,

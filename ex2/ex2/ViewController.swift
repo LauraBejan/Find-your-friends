@@ -7,9 +7,17 @@
 //
 
 import UIKit
+import MapKit
+import CoreData
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var velloStations: UILabel!
+    @IBOutlet weak var fixedLastUpdate: UILabel!
+    @IBOutlet weak var lastUpdateCoreData: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
