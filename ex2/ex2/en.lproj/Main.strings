@@ -1,0 +1,87 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "0kv-bV-lOa"; */
+"0kv-bV-lOa.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "3ZK-Ne-f3C"; */
+"3ZK-Ne-f3C.text" = "Label";
+
+/* Class = "UILabel"; text = "Status:"; ObjectID = "4wv-ND-PuC"; */
+"4wv-ND-PuC.text" = "Status:";
+
+/* Class = "UILabel"; text = "Contract:"; ObjectID = "7lg-L2-9p4"; */
+"7lg-L2-9p4.text" = "Contract:";
+
+/* Class = "UILabel"; text = "Address:"; ObjectID = "93i-yh-nrx"; */
+"93i-yh-nrx.text" = "Address:";
+
+/* Class = "UILabel"; text = "23/10/1997"; ObjectID = "96c-xw-gUU"; */
+"96c-xw-gUU.text" = "23/10/1997";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "9iQ-LN-RTF"; */
+"9iQ-LN-RTF.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "fr"; ObjectID = "CoK-0u-Ppa"; */
+"CoK-0u-Ppa.normalTitle" = "fr";
+
+/* Class = "UIButton"; normalTitle = "en"; ObjectID = "FU2-jY-0jp"; */
+"FU2-jY-0jp.normalTitle" = "en";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "GiH-sP-PWP"; */
+"GiH-sP-PWP.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "MkU-iG-pYv"; */
+"MkU-iG-pYv.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ODL-02-vmx"; */
+"ODL-02-vmx.text" = "Label";
+
+/* Class = "UILabel"; text = "Number:"; ObjectID = "Otn-Jh-Qfc"; */
+"Otn-Jh-Qfc.text" = "Number:";
+
+/* Class = "UILabel"; text = "Coordinates:"; ObjectID = "S9m-Az-dNI"; */
+"S9m-Az-dNI.text" = "Coordinates:";
+
+/* Class = "UILabel"; text = "Banking:"; ObjectID = "TsC-96-Jxn"; */
+"TsC-96-Jxn.text" = "Banking:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "YQD-3B-Hdu"; */
+"YQD-3B-Hdu.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "f35-k1-SLK"; */
+"f35-k1-SLK.text" = "Label";
+
+/* Class = "UILabel"; text = "Available bikes:"; ObjectID = "gNM-IT-9Xt"; */
+"gNM-IT-9Xt.text" = "Available bikes:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "gc3-K8-Z4j"; */
+"gc3-K8-Z4j.text" = "Label";
+
+/* Class = "UILabel"; text = "Bike stands:"; ObjectID = "gjX-f1-zID"; */
+"gjX-f1-zID.text" = "Bike stands:";
+
+/* Class = "UILabel"; text = "Bonus:"; ObjectID = "om8-zY-5u0"; */
+"om8-zY-5u0.text" = "Bonus:";
+
+/* Class = "UIButton"; normalTitle = "Update"; ObjectID = "t5J-7v-pDd"; */
+"t5J-7v-pDd.normalTitle" = "Update";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "to7-By-udt"; */
+"to7-By-udt.text" = "Label";
+
+/* Class = "UILabel"; text = "Last update:"; ObjectID = "ujZ-aG-TxF"; */
+"ujZ-aG-TxF.text" = "Last update:";
+
+/* Class = "UILabel"; text = "Vello Stations"; ObjectID = "w0h-Mr-eNq"; */
+"w0h-Mr-eNq.text" = "Vello Stations";
+
+/* Class = "UILabel"; text = "Last update:"; ObjectID = "x6d-vE-osd"; */
+"x6d-vE-osd.text" = "Last update:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "yTS-Hu-bUC"; */
+"yTS-Hu-bUC.text" = "Label";
+
+/* Class = "UILabel"; text = "Available bike stands:"; ObjectID = "yqO-kU-mIX"; */
+"yqO-kU-mIX.text" = "Available bike stands:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "zs8-6H-H2M"; */
+"zs8-6H-H2M.text" = "Label";
