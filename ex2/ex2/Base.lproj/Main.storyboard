@@ -36,6 +36,9 @@
                                     <constraint firstAttribute="height" constant="40" id="XPk-22-oDr"/>
                                 </constraints>
                                 <state key="normal" title="Update" image="refresh-button-icon-63755"/>
+                                <connections>
+                                    <action selector="updatecoreData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T6J-yu-ccp"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="23/10/1997" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="96c-xw-gUU">
                                 <rect key="frame" x="293.5" y="643" width="72.5" height="17"/>

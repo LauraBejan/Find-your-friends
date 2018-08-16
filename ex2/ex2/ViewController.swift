@@ -18,11 +18,59 @@ class ViewController: UIViewController {
     @IBOutlet weak var fixedLastUpdate: UILabel!
     @IBOutlet weak var lastUpdateCoreData: UILabel!
     
+    struct Station: Decodable{
+        let address: String
+        let available_bike_stands: Int
+        let available_bikes: Int
+        let banking: Bool
+        let bike_stands: Int
+        let bonus: Bool
+        let contract_name: String
+        let last_update: Int
+        let name: String
+        let number: Int
+        let position: Position
+        let status: String
+    }
+    struct Position: Decodable {
+        let lat: Double
+        let lng: Double
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-     
     }
+    
+    @IBAction func updatecoreData(_ sender: Any) {
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext //FOR CORE DATA
+        
+        let jsonUrl = "https://api.jcdecaux.com/vls/v1/stations?apiKey=6d5071ed0d0b3b68462ad73df43fd9e5479b03d6&contract=Bruxelles-Capitale"
+        
+            guard let url = URL(string: jsonUrl) else
+            {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
+
+            
+            guard let data = data else { return }
+            do {
+         
+                let station = try JSONDecoder().decode([Station].self, from: data)
+
+                let myStation:[Station] = station
+                print(myStation[0].address)
+          
+                
+            } catch let jsonErr {
+                print("Error serializing json:", jsonErr)
+            }
+            
+            
+            
+            }.resume()
+        
+    }
+      
     
     @IBAction func goToEnglish(_ sender: Any) {
         
