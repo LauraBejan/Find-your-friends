@@ -19,28 +19,33 @@ class ViewController: UIViewController {
     @IBOutlet weak var lastUpdateCoreData: UILabel!
     
     struct Station: Decodable{
-        let address: String
-        let available_bike_stands: Int
-        let available_bikes: Int
-        let banking: Bool
-        let bike_stands: Int
-        let bonus: Bool
-        let contract_name: String
-        let last_update: Int
-        let name: String
-        let number: Int
-        let position: Position
-        let status: String
+        var address: String
+        var available_bike_stands: Int
+        var available_bikes: Int
+        var banking: Bool
+        var bike_stands: Int
+        var bonus: Bool
+        var contract_name: String
+        var name: String
+        var last_update: Int
+        var lastUpdate: Date
+        var number: Int
+        var position: Position
+        var status: String
     }
     struct Position: Decodable {
-        let lat: Double
-        let lng: Double
+        var lat: Double
+        var lng: Double
     }
+    
+    var fullInfo = [Station]()
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     @IBAction func updatecoreData(_ sender: Any) {
+        
+        clearData()
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext //FOR CORE DATA
         
@@ -56,10 +61,44 @@ class ViewController: UIViewController {
             do {
          
                 let station = try JSONDecoder().decode([Station].self, from: data)
-
-                let myStation:[Station] = station
-                print(myStation[0].address)
-          
+                
+          //      let myStation:[Station] = station
+       
+            
+                var coreDataHolder = NSEntityDescription.insertNewObject(forEntityName: "VilloEn", into: context)
+                
+                for item in station
+                {
+                    coreDataHolder.setValue( item.address, forKey:"address")
+                    coreDataHolder.setValue( item.available_bikes, forKey:"available_bikes")
+                    coreDataHolder.setValue( item.available_bike_stands, forKey:"available_bike_stands")
+                    coreDataHolder.setValue( item.banking, forKey:"banking")
+                    coreDataHolder.setValue( item.bike_stands, forKey:"bike_stands")
+                    coreDataHolder.setValue( item.bonus, forKey:"bonus")
+                    coreDataHolder.setValue( item.name, forKey:"name")
+                    coreDataHolder.setValue( item.contract_name, forKey:"contract_name")
+                    coreDataHolder.setValue( item.last_update, forKey:"last_update")
+                    coreDataHolder.setValue( item.position.lat, forKey:"lat")
+                    coreDataHolder.setValue( item.position.lng, forKey:"long")
+                    coreDataHolder.setValue( item.number, forKey:"number")
+                    coreDataHolder.setValue( item.status, forKey:"status")
+                    coreDataHolder.setValue( Date(), forKey:"lastUpdated")
+              //      coreDataHolder.name = item.name
+                 //   print(coreDataHolder.name)
+                  //  print(coreDataHolder)
+                    
+                    do{
+                        try(context.save())
+                    }
+                    catch
+                    {
+                        print("error")
+                    }
+                }
+                
+                
+                //print(myStation[0].address)
+                
                 
             } catch let jsonErr {
                 print("Error serializing json:", jsonErr)
@@ -70,7 +109,62 @@ class ViewController: UIViewController {
             }.resume()
         
     }
-      
+    
+    func clearData()
+    {
+    
+    }
+    func fetchData() {
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        
+        if let context = delegate?.persistentContainer.viewContext {
+            
+            do {
+                
+                //let entityName = ["VilloEn"]
+                
+               
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "VilloEn")
+                    
+                  //  let objects = try(context.executeFetchRequest(fetchRequest)) as? [NSManagedObject]
+                
+                fetchRequest.returnsObjectsAsFaults = false
+                
+                do{
+                    let results = try context.fetch(fetchRequest)
+                    
+                    if results.count > 0
+                    {
+                        for result in results as! [NSManagedObject]
+                        {
+                            var info: Station
+                            info.address = result.value(forKey: "address") as! String
+                            info.available_bike_stands = result.value(forKey: "available_bike_stands") as! Int
+                            info.available_bikes = result.value(forKey: "available_bikes") as! Int
+                            info.banking = result.value(forKey: "banking") as! Bool
+                            info.bike_stands = result.value(forKey: "bike_stands") as! Int
+                            info.bonus = result.value(forKey: "bonus") as! Bool
+                            info.contract_name = result.value(forKey: "contract_name") as! String
+                            info.last_update = result.value(forKey: "last_update") as! Int
+                            info.position.lat = result.value(forKey: "lat") as! Double
+                            info.position.lng = result.value(forKey: "long") as! Double
+                            info.name = result.value(forKey: "name") as! String
+                            info.number = result.value(forKey: "number") as! Int
+                            info.status = result.value(forKey: "status") as! String
+                            info.lastUpdate = result.value(forKey: "lastUpdated") as! Date
+
+                            fullInfo.append(info)
+                            
+                        }
+                    }
+                }
+     
+            } catch let err {
+                print(err)
+            }
+            
+        }
+    }
     
     @IBAction func goToEnglish(_ sender: Any) {
         
