@@ -66,15 +66,25 @@
                                     <action selector="goToFrench:" destination="BYZ-38-t0r" eventType="touchUpInside" id="916-a6-IBI"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T9i-Ck-KRV">
+                                <rect key="frame" x="58" y="154" width="308" height="30"/>
+                                <state key="normal" title="Tap once to load the Villo stations"/>
+                                <connections>
+                                    <action selector="addMarksOnMapView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cgF-d7-USx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="96c-xw-gUU" secondAttribute="bottom" constant="7" id="2QN-7g-EOU"/>
                             <constraint firstItem="96c-xw-gUU" firstAttribute="leading" secondItem="x6d-vE-osd" secondAttribute="trailing" constant="8" id="37F-FD-w8E"/>
+                            <constraint firstItem="T9i-Ck-KRV" firstAttribute="top" secondItem="w0h-Mr-eNq" secondAttribute="bottom" constant="8" id="4Mq-gz-sv3"/>
+                            <constraint firstItem="0f9-JG-vPc" firstAttribute="top" secondItem="T9i-Ck-KRV" secondAttribute="bottom" constant="5" id="7p1-ck-bQB"/>
                             <constraint firstItem="CoK-0u-Ppa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="AYM-CV-LJ3"/>
                             <constraint firstItem="96c-xw-gUU" firstAttribute="leading" secondItem="x6d-vE-osd" secondAttribute="trailing" constant="8" id="DFy-Ut-KPq"/>
                             <constraint firstItem="CoK-0u-Ppa" firstAttribute="leading" secondItem="FU2-jY-0jp" secondAttribute="trailing" id="I55-kd-Wfy"/>
                             <constraint firstItem="0f9-JG-vPc" firstAttribute="top" secondItem="w0h-Mr-eNq" secondAttribute="bottom" constant="43" id="JzJ-yW-m7p"/>
+                            <constraint firstItem="T9i-Ck-KRV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="58" id="MCp-xe-hLu"/>
                             <constraint firstItem="0f9-JG-vPc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="NvU-A8-1Pp"/>
                             <constraint firstItem="x6d-vE-osd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="180" id="Oaz-6G-aNf"/>
                             <constraint firstItem="0f9-JG-vPc" firstAttribute="top" secondItem="CoK-0u-Ppa" secondAttribute="bottom" constant="95" id="OmA-tz-13a"/>
@@ -94,6 +104,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="96c-xw-gUU" secondAttribute="trailing" constant="9" id="ho8-GU-oP7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="t5J-7v-pDd" secondAttribute="trailing" constant="10" id="mlM-Xy-Ztj"/>
                             <constraint firstItem="t5J-7v-pDd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="qdl-yz-5An"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="T9i-Ck-KRV" secondAttribute="trailing" constant="9" id="qkV-Uu-ap4"/>
                             <constraint firstItem="CoK-0u-Ppa" firstAttribute="leading" secondItem="FU2-jY-0jp" secondAttribute="trailing" id="qnQ-fj-3Gg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -103,6 +114,7 @@
                         <outlet property="fixedLastUpdate" destination="x6d-vE-osd" id="vXu-XM-NUQ"/>
                         <outlet property="lastUpdateCoreData" destination="96c-xw-gUU" id="SRG-oz-wKf"/>
                         <outlet property="mapView" destination="0f9-JG-vPc" id="EhM-Om-Wfi"/>
+                        <outlet property="stationsButton" destination="T9i-Ck-KRV" id="jla-71-NcK"/>
                         <outlet property="velloStations" destination="w0h-Mr-eNq" id="g9k-Up-DD1"/>
                         <segue destination="ElO-UG-uab" kind="show" identifier="goToDetailPage" id="RxZ-ac-pG3"/>
                     </connections>

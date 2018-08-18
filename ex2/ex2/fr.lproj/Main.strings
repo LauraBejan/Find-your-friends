@@ -11,6 +11,9 @@
 /* Class = "UILabel"; text = "Contract:"; ObjectID = "7lg-L2-9p4"; */
 "7lg-L2-9p4.text" = "Le contrat:";
 
+/* Class = "UIButton"; normalTitle = "Tap once to load the Villo stations"; ObjectID = "T9i-Ck-KRV"; */
+"T9i-Ck-KRV.normalTitle" = "Appuyez une fois pour charger les stations Villo";
+
 /* Class = "UILabel"; text = "Address:"; ObjectID = "93i-yh-nrx"; */
 "93i-yh-nrx.text" = "L'adresse:";
 

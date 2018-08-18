@@ -10,15 +10,22 @@ import UIKit
 import MapKit
 import CoreData
 import Foundation
+import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate , MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var velloStations: UILabel!
     @IBOutlet weak var fixedLastUpdate: UILabel!
     @IBOutlet weak var lastUpdateCoreData: UILabel!
+    @IBOutlet weak var stationsButton: UIButton!
     
     let delegate = UIApplication.shared.delegate as? AppDelegate
+    var i = 0
+
+    let tracker = CLLocationManager()
+    var locations = [MKAnnotation]()
+    var lastUpdated = Date()
     
     class Station: Decodable{
         var address = ""
@@ -68,84 +75,164 @@ class ViewController: UIViewController {
     
     var fullInfo = [Station]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        getDataForTheFirstTimeFromJSON() { (success) -> Void in
-            if success {
-                // do second task if success
-                self.readCoreData()
-            }
-        }
-        
+
+
+    @IBAction func addMarksOnMapView(_ sender: Any) {
+        stationsButton.isHidden = true
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.1, 0.1)
+        let mark = MKPointAnnotation()
+        print(fullInfo.count)
+        for info in fullInfo
+         {
+            print(info.address)
+         let myLat = Double(info.position.lat)
+         let myLong = Double(info.position.lng)
+         
+         let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(myLat, myLong)
+         let region: MKCoordinateRegion = MKCoordinateRegionMake( location, span)
+         mapView.setRegion(region, animated: true)
+         
+          let mark = MKPointAnnotation()
+         
+         mark.coordinate = location
+         mark.title = info.name
+         
+         locations.append(mark)
+        // DispatchQueue.main.async {
+         self.mapView.addAnnotation(mark)
+     
+        // }
         
     }
+    }
+    /*
+    func addMarksOnMap()
+    {
+        //MAP CARD
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.1, 0.1)
+      print("smth")
+        let mark = MKPointAnnotation()
+        for info in fullInfo
+        {
+            let myLat = Double(info.position.lat)
+            let myLong = Double(info.position.lng)
+            
+            let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(myLat, myLong)
+            let region: MKCoordinateRegion = MKCoordinateRegionMake( location, span)
+            mapView.setRegion(region, animated: true)
+            
+          //  let mark = MKPointAnnotation()
+          
+            mark.coordinate = location
+            mark.title = info.name
+            
+            locations.append(mark)
+            DispatchQueue.main.async {
+                self.mapView.addAnnotation(mark)
+            }
+ 
+    }
+}
+    */
+  func addMarksOnMap()
+    {
+        //MAP CARD
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.1, 0.1)
+        let mark = MKPointAnnotation()
+        print(fullInfo.count)
+        for info in fullInfo
+        {
+            print(info.address)
+            let myLat = Double(info.position.lat)
+            let myLong = Double(info.position.lng)
+            
+            let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(myLat, myLong)
+            let region: MKCoordinateRegion = MKCoordinateRegionMake( location, span)
+            mapView.setRegion(region, animated: true)
+            
+            let mark = MKPointAnnotation()
+            
+            mark.coordinate = location
+            mark.title = info.name
+            
+            locations.append(mark)
+            // DispatchQueue.main.async {
+            self.mapView.addAnnotation(mark)
+            
+            // }
+        }
+    }
+    
     
     func getDataForTheFirstTimeFromJSON(completion: @escaping (_ success: Bool) -> Void)
     {
-        let context = (delegate)?.persistentContainer.viewContext //FOR CORE DATA
-        
-        let jsonUrl = "https://api.jcdecaux.com/vls/v1/stations?apiKey=6d5071ed0d0b3b68462ad73df43fd9e5479b03d6&contract=Bruxelles-Capitale"
-        
-        guard let url = URL(string: jsonUrl) else
-        {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-            
-            
-            guard let data = data else { return }
-            do {
+        clearData() { (succes) -> Void in
+            if succes{
+                let context = (self.delegate)?.persistentContainer.viewContext //FOR CORE DATA
                 
-                let station = try JSONDecoder().decode([Station].self, from: data)
+                let jsonUrl = "https://api.jcdecaux.com/vls/v1/stations?apiKey=6d5071ed0d0b3b68462ad73df43fd9e5479b03d6&contract=Bruxelles-Capitale"
                 
-                //      let myStation:[Station] = station
+                guard let url = URL(string: jsonUrl) else
+                {return}
                 
-                
-                var coreDataHolder = NSEntityDescription.insertNewObject(forEntityName: "VilloEn", into: context!)
-                
-                for item in station
-                {
-                    coreDataHolder.setValue( item.address, forKey:"address")
-                    coreDataHolder.setValue( item.available_bikes, forKey:"available_bikes")
-                    coreDataHolder.setValue( item.available_bike_stands, forKey:"available_bike_stands")
-                    coreDataHolder.setValue( item.banking, forKey:"banking")
-                    coreDataHolder.setValue( item.bike_stands, forKey:"bike_stands")
-                    coreDataHolder.setValue( item.bonus, forKey:"bonus")
-                    coreDataHolder.setValue( item.name, forKey:"name")
-                    coreDataHolder.setValue( item.contract_name, forKey:"contract_name")
-                    coreDataHolder.setValue( item.last_update, forKey:"last_update")
-                    coreDataHolder.setValue( item.position.lat, forKey:"lat")
-                    coreDataHolder.setValue( item.position.lng, forKey:"long")
-                    coreDataHolder.setValue( item.number, forKey:"number")
-                    coreDataHolder.setValue( item.status, forKey:"status")
-                    coreDataHolder.setValue( Date(), forKey:"lastUpdated")
-                    //print(coreDataHolder)
-                  
-                    do{
-                        try(context?.save())
-                        completion(true)
+                URLSession.shared.dataTask(with: url) { (data, response, err) in
+                    
+                    
+                    guard let data = data else { return }
+                    do {
+                        
+                        let station = try JSONDecoder().decode([Station].self, from: data)
+                        
+                        //      let myStation:[Station] = station
+                        
+                        
+                        let coreDataHolder = NSEntityDescription.insertNewObject(forEntityName: "VilloEn", into: context!)
+                        
+                        for item in station
+                        {
+                            coreDataHolder.setValue( item.address, forKey:"address")
+                            coreDataHolder.setValue( item.available_bikes, forKey:"available_bikes")
+                            coreDataHolder.setValue( item.available_bike_stands, forKey:"available_bike_stands")
+                            coreDataHolder.setValue( item.banking, forKey:"banking")
+                            coreDataHolder.setValue( item.bike_stands, forKey:"bike_stands")
+                            coreDataHolder.setValue( item.bonus, forKey:"bonus")
+                            coreDataHolder.setValue( item.name, forKey:"name")
+                            coreDataHolder.setValue( item.contract_name, forKey:"contract_name")
+                            coreDataHolder.setValue( item.last_update, forKey:"last_update")
+                            coreDataHolder.setValue( item.position.lat, forKey:"lat")
+                            coreDataHolder.setValue( item.position.lng, forKey:"long")
+                            coreDataHolder.setValue( item.number, forKey:"number")
+                            coreDataHolder.setValue( item.status, forKey:"status")
+                            coreDataHolder.setValue( Date(), forKey:"lastUpdated")
+                            //print(coreDataHolder)
+                          
+                            do{
+                                try(context?.save())
+                                completion(true)
+                            }
+                            catch
+                            {
+                                print("error")
+                            }
+                        }
+                        
+                    } catch let jsonErr {
+                        print("Error serializing json:", jsonErr)
                     }
-                    catch
-                    {
-                        print("error")
-                    }
-                }
-                
-            } catch let jsonErr {
-                print("Error serializing json:", jsonErr)
+                    
+                    
+                    
+                    }.resume()
             }
-            
-            
-            
-            }.resume()
         
     }
-    
+}
     
     @IBAction func updateCoreDataAtUsersRequest(_ sender: Any) {
-        clearData()
+        clearData() { (succes) -> Void in
+            if succes{
         
-        let context = (delegate)?.persistentContainer.viewContext //FOR CORE DATA
+                let context = (self.delegate)?.persistentContainer.viewContext //FOR CORE DATA
         
         let jsonUrl = "https://api.jcdecaux.com/vls/v1/stations?apiKey=6d5071ed0d0b3b68462ad73df43fd9e5479b03d6&contract=Bruxelles-Capitale"
         
@@ -188,7 +275,13 @@ class ViewController: UIViewController {
                     do{
                         try(context?.save())
                         
-                        self.readCoreData()
+                        self.readCoreData{ (succes) -> Void in
+                            if succes{
+                                //MAP
+
+                               // self.addMarksOnMap()                    }
+                        }
+                    }
                     }
                     catch
                     {
@@ -208,8 +301,11 @@ class ViewController: UIViewController {
             
             }.resume()
     }
+            
+        }
+    }
 
-    func clearData() {
+    func clearData(completion: @escaping (_ success: Bool) -> Void) {
         
         if let context = delegate?.persistentContainer.viewContext {
             
@@ -225,6 +321,7 @@ class ViewController: UIViewController {
                 
                 
                 try(context.save())
+                completion(true)
                 
                 
             } catch let err {
@@ -234,9 +331,8 @@ class ViewController: UIViewController {
         }
     }
     
-    func readCoreData() {
+    func readCoreData(completion: @escaping (_ succes: Bool) -> Void) {
         
-        fullInfo.removeAll()
         
         if let context = delegate?.persistentContainer.viewContext {
             
@@ -256,15 +352,13 @@ class ViewController: UIViewController {
                     
                     if results.count > 0
                     {
+                        
                         for result in results as! [NSManagedObject]
                         {
                            // print(result)
                         //    fullInfo.append(result)
                             var info = Station()
-                            if let k = result.value(forKey: "address") as? String
-                            {
-                                info.address = k
-                            }
+                            info.address = result.value(forKey: "address") as! String
                             info.available_bike_stands = result.value(forKey: "available_bike_stands") as! Int
                             info.available_bikes = result.value(forKey: "available_bikes") as! Int
                             info.banking = result.value(forKey: "banking") as! Bool
@@ -278,17 +372,17 @@ class ViewController: UIViewController {
                             info.number = result.value(forKey: "number") as! Int
                             info.status = result.value(forKey: "status") as! String
                             //info.lastUpdate = result.value(forKey: "lastUpdated") as! Date
-
+                            lastUpdated = result.value(forKey: "lastUpdated") as! Date
                             fullInfo.append(info)
-                   
                         }
                     }
+                    print(fullInfo.count)
                 }
-     
+                completion(true)
+                i = -1
             } catch let err {
                 print(err)
             }
-            
         }
     }
     
@@ -343,12 +437,63 @@ class ViewController: UIViewController {
     
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    
+        
+        getDataForTheFirstTimeFromJSON() { (success) -> Void in
+            if success {
+                // do second task if success
+                self.readCoreData() { (succes) -> Void in
+                    if succes{
+                        //MAP
+                     //   print(self.fullInfo[0].position.lat)
+                        
+                        self.tracker.delegate = self as? CLLocationManagerDelegate
+                        self.tracker.desiredAccuracy = kCLLocationAccuracyBest
+
+                    //    self.addMarksOnMap(lat: self.fullInfo[self.fullInfo.count-1].position.lat,long: //self.fullInfo[self.fullInfo.count-1].position.lng)
+                    //    self.addMarksOnMap()
+                        //    self.tracker.requestWhenInUseAuthorization()
+                        //  self.tracker.startUpdatingLocation()
+                        
+                        // let devicelatitude = (self.tracker.location?.coordinate.latitude)!
+                        //  let devicelongitude = (self.tracker.location?.coordinate.longitude)!
+                        //      print(devicelatitude)
+                        //   print(devicelongitude)
+                        
+                      //  self.addMarksOnMap() { (succes) -> Void in
+                      //      if succes{
+                              /*  let span:MKCoordinateSpan = MKCoordinateSpanMake(0.1, 0.1)
+                                let mark = MKPointAnnotation()
+                                let myLat = Double(self.fullInfo[0].position.lat)
+                                let myLong = Double(self.fullInfo[0].position.lng)
+                                let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(myLat, myLong)
+                                let region: MKCoordinateRegion = MKCoordinateRegionMake( location, span)
+                                self.mapView.setRegion(region, animated: true)
+                                
+                                
+                                mark.coordinate = location
+                                mark.title = self.fullInfo[0].name
+                                
+                                self.locations.append(mark)
+                                DispatchQueue.main.async {
+                              self.mapView.addAnnotation(mark)
+                                }
+                            print("OMG")*/
+                        
+                   // }
+              //  }
+            }
+        }
+    }
+}
   
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
 
