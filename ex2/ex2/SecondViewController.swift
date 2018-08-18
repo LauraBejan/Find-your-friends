@@ -35,10 +35,33 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var fixedAvailableBikeStands: UILabel!
     @IBOutlet weak var fixedAvailableBikes: UILabel!
     @IBOutlet weak var fixedLastUpdate: UILabel!
+    
+    var passedName = ""
+    var passedAddress = ""
+    var passedNumber = 0
+    var passedBanking = true
+    var passedABS = 0
+    var passedAB = 0
+    var passedBS = 0
+    var passedBonus = true
+    var passedCN = ""
+    var passedLU = 0
+    var passedStatus = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        name.text = passedName
+        address.text = passedAddress
+        number.text = String(passedNumber)
+        banking.text = String(passedBanking)
+        availableBikeStands.text = String(passedABS)
+        bikeStands.text = String(passedBS)
+        availableBikes.text = String(passedAB)
+        bonus.text = String(passedBonus)
+        contract.text = passedCN
+        lastUpdate.text = String(passedLU)
+        status.text = String(passedStatus)
     }
  
     override func didReceiveMemoryWarning() {

@@ -73,9 +73,56 @@ class ViewController: UIViewController, CLLocationManagerDelegate , MKMapViewDel
         }
     }
     
+    class MarkClass: NSObject, MKAnnotation
+    {
+        var identifier : String
+        var name: String
+      //  let subtitle: String
+        var coordinate: CLLocationCoordinate2D
+        var address: String
+        var number: Int
+        var banking: Bool
+        var available_bike_stands: Int
+        var available_bikes: Int
+        var bike_stands: Int
+        var bonus = Bool(false)
+        var contract_name: String
+        var last_update: Int
+        //  var lastUpdate: Date
+        var status: String
+        
+        init(identifier: String, name: String, coordinate: CLLocationCoordinate2D, address: String, number: Int, banking: Bool, avb: Int, ab: Int, bs: Int, bonus: Bool, cn: String, last_update: Int, status: String)
+        {
+            self.identifier = identifier
+            self.name = name
+            self.coordinate = coordinate
+            self.address = address
+            self.number = number
+            self.banking = banking
+            self.available_bike_stands = avb
+            self.available_bikes = ab
+            self.bike_stands = bs
+            self.bonus = bonus
+            self.contract_name = cn
+            self.last_update = last_update
+            self.status = status
+            super.init()
+        }
+        
+
+    }
+    var markList = [MarkClass]()
     var fullInfo = [Station]()
     
 
+    func toString( dateFormat format  : String, date: Date ) -> String
+        {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = format
+            return dateFormatter.string(from: date)
+        }
+        
+    
 
     @IBAction func addMarksOnMapView(_ sender: Any) {
         stationsButton.isHidden = true
@@ -84,7 +131,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate , MKMapViewDel
         print(fullInfo.count)
         for info in fullInfo
          {
-            print(info.address)
+           // print(info.address)
          let myLat = Double(info.position.lat)
          let myLong = Double(info.position.lng)
          
@@ -92,78 +139,74 @@ class ViewController: UIViewController, CLLocationManagerDelegate , MKMapViewDel
          let region: MKCoordinateRegion = MKCoordinateRegionMake( location, span)
          mapView.setRegion(region, animated: true)
          
-          let mark = MKPointAnnotation()
+        let mark = MKPointAnnotation()
          
          mark.coordinate = location
          mark.title = info.name
-         
-         locations.append(mark)
-        // DispatchQueue.main.async {
+            mark.subtitle = String(i)
+         var name = info.name
+         var number = info.number
+            print(i)
+            let mark2 = MarkClass(identifier: String(i),name: name,coordinate: location, address: info.address, number: number, banking: info.banking, avb: info.available_bike_stands, ab: info.available_bikes, bs: info.bike_stands, bonus: info.bonus, cn: info.contract_name, last_update: info.last_update, status: info.status)
+         i = i+1
+            
+         markList.append(mark2)
+
          self.mapView.addAnnotation(mark)
-     
-        // }
-        
-    }
-    }
-    /*
-    func addMarksOnMap()
-    {
-        //MAP CARD
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.1, 0.1)
-      print("smth")
-        let mark = MKPointAnnotation()
-        for info in fullInfo
-        {
-            let myLat = Double(info.position.lat)
-            let myLong = Double(info.position.lng)
-            
-            let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(myLat, myLong)
-            let region: MKCoordinateRegion = MKCoordinateRegionMake( location, span)
-            mapView.setRegion(region, animated: true)
-            
-          //  let mark = MKPointAnnotation()
-          
-            mark.coordinate = location
-            mark.title = info.name
-            
-            locations.append(mark)
-            DispatchQueue.main.async {
-                self.mapView.addAnnotation(mark)
-            }
- 
-    }
-}
-    */
-  func addMarksOnMap()
-    {
-        //MAP CARD
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.1, 0.1)
-        let mark = MKPointAnnotation()
-        print(fullInfo.count)
-        for info in fullInfo
-        {
-            print(info.address)
-            let myLat = Double(info.position.lat)
-            let myLong = Double(info.position.lng)
-            
-            let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(myLat, myLong)
-            let region: MKCoordinateRegion = MKCoordinateRegionMake( location, span)
-            mapView.setRegion(region, animated: true)
-            
-            let mark = MKPointAnnotation()
-            
-            mark.coordinate = location
-            mark.title = info.name
-            
-            locations.append(mark)
-            // DispatchQueue.main.async {
-            self.mapView.addAnnotation(mark)
-            
-            // }
         }
     }
+
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation is MKUserLocation
+        {
+            return nil
+        }
+        
+        let mark = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
+        
+        mark.canShowCallout = true
+        
+        
+        mark.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        
+        return mark
+    }
     
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        let annotationView = view.annotation
+        
+        let storyboard = UIStoryboard(name:"Main", bundle: nil)
+
+        let secondView = storyboard.instantiateViewController(withIdentifier: "Second") as! SecondViewController
+        
+        var identifier = annotationView?.subtitle
+       
+        
+        for mark in markList
+        {
+            if identifier == mark.identifier
+            {
+                secondView.passedName = mark.name
+                print(mark.name)
+                secondView.passedAddress = mark.address
+                secondView.passedBanking = mark.banking
+                secondView.passedNumber = mark.number
+                secondView.passedABS = mark.available_bike_stands
+                secondView.passedAddress = mark.address
+                secondView.passedAB = mark.available_bikes
+                secondView.passedStatus = mark.status
+                secondView.passedBonus = mark.bonus
+                secondView.passedLU = mark.last_update
+                secondView.passedCN = mark.contract_name
+            }
+        }
+        self.navigationController?.pushViewController(secondView, animated: true)
+        
+    }
+
     func getDataForTheFirstTimeFromJSON(completion: @escaping (_ success: Bool) -> Void)
     {
         clearData() { (succes) -> Void in
@@ -182,8 +225,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate , MKMapViewDel
                     do {
                         
                         let station = try JSONDecoder().decode([Station].self, from: data)
-                        
-                        //      let myStation:[Station] = station
                         
                         
                         let coreDataHolder = NSEntityDescription.insertNewObject(forEntityName: "VilloEn", into: context!)
@@ -226,6 +267,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate , MKMapViewDel
             }
         
     }
+    let date = Date()
+    var myDate = toString(dateFormat: "yyyy-MM-dd HH:mm", date: date)
+    print(myDate)
 }
     
     @IBAction func updateCoreDataAtUsersRequest(_ sender: Any) {
@@ -268,9 +312,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate , MKMapViewDel
                     coreDataHolder.setValue( item.number, forKey:"number")
                     coreDataHolder.setValue( item.status, forKey:"status")
                     coreDataHolder.setValue( Date(), forKey:"lastUpdated")
-                    //      coreDataHolder.name = item.name
-                    //   print(coreDataHolder.name)
-                    //     print(coreDataHolder)
+
                     
                     do{
                         try(context?.save())
@@ -289,8 +331,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate , MKMapViewDel
                     }
                 }
                 
-                
-                //print(myStation[0].address)
                 
                 
             } catch let jsonErr {
@@ -440,56 +480,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate , MKMapViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        
+        lastUpdateCoreData.text = toString(dateFormat: "dd-MMM-yyyy", date: lastUpdated)
         getDataForTheFirstTimeFromJSON() { (success) -> Void in
             if success {
                 // do second task if success
                 self.readCoreData() { (succes) -> Void in
                     if succes{
                         //MAP
-                     //   print(self.fullInfo[0].position.lat)
-                        
+
+                        self.mapView.delegate = self
                         self.tracker.delegate = self as? CLLocationManagerDelegate
                         self.tracker.desiredAccuracy = kCLLocationAccuracyBest
 
-                    //    self.addMarksOnMap(lat: self.fullInfo[self.fullInfo.count-1].position.lat,long: //self.fullInfo[self.fullInfo.count-1].position.lng)
-                    //    self.addMarksOnMap()
-                        //    self.tracker.requestWhenInUseAuthorization()
-                        //  self.tracker.startUpdatingLocation()
-                        
-                        // let devicelatitude = (self.tracker.location?.coordinate.latitude)!
-                        //  let devicelongitude = (self.tracker.location?.coordinate.longitude)!
-                        //      print(devicelatitude)
-                        //   print(devicelongitude)
-                        
-                      //  self.addMarksOnMap() { (succes) -> Void in
-                      //      if succes{
-                              /*  let span:MKCoordinateSpan = MKCoordinateSpanMake(0.1, 0.1)
-                                let mark = MKPointAnnotation()
-                                let myLat = Double(self.fullInfo[0].position.lat)
-                                let myLong = Double(self.fullInfo[0].position.lng)
-                                let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(myLat, myLong)
-                                let region: MKCoordinateRegion = MKCoordinateRegionMake( location, span)
-                                self.mapView.setRegion(region, animated: true)
-                                
-                                
-                                mark.coordinate = location
-                                mark.title = self.fullInfo[0].name
-                                
-                                self.locations.append(mark)
-                                DispatchQueue.main.async {
-                              self.mapView.addAnnotation(mark)
-                                }
-                            print("OMG")*/
-                        
-                   // }
-              //  }
             }
         }
     }
+
 }
   
-    }
+}
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
