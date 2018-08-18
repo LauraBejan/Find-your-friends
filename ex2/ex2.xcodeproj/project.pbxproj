@@ -17,6 +17,7 @@
 		D3BAB7B8212473BE00370D9E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3BAB7B6212473BE00370D9E /* LaunchScreen.storyboard */; };
 		D3BAB7C3212473BF00370D9E /* ex2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BAB7C2212473BF00370D9E /* ex2Tests.swift */; };
 		D3BAB7CE212473BF00370D9E /* ex2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BAB7CD212473BF00370D9E /* ex2UITests.swift */; };
+		D3EC773F21285FC700A58279 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3EC773E21285FC700A58279 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		D3BAB7C9212473BF00370D9E /* ex2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ex2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BAB7CD212473BF00370D9E /* ex2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ex2UITests.swift; sourceTree = "<group>"; };
 		D3BAB7CF212473BF00370D9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3EC773E21285FC700A58279 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3EC773F21285FC700A58279 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +95,7 @@
 				D3BAB7C1212473BF00370D9E /* ex2Tests */,
 				D3BAB7CC212473BF00370D9E /* ex2UITests */,
 				D3BAB7A8212473BC00370D9E /* Products */,
+				D3EC773D21285FC600A58279 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +141,14 @@
 				D3BAB7CF212473BF00370D9E /* Info.plist */,
 			);
 			path = ex2UITests;
+			sourceTree = "<group>";
+		};
+		D3EC773D21285FC600A58279 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D3EC773E21285FC700A58279 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
